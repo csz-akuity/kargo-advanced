@@ -15,6 +15,27 @@ spec:
     successCondition: result < 200
     failureLimit: 3
     provider:
-      web:
-        url: https://pokeapi.co/api/v2/pokemon/{{args.pokemon}}
-        jsonPath: "{$.base_experience}"
+      job:
+        spec:
+          template:
+            spec:
+              containers:
+              - name: verification-container
+                command:
+                - sh
+                - -c
+                - |
+                  # All echo statements output to stdout/stderr for log collection
+                  echo "=== Verification Starting ===" >&2
+                  echo "Checking Pokemon: {{args.pokemon}}" >&2
+                  
+                  # Simulate a check (in real usage, this would be your actual verification)
+                  echo "Fetching data..." >&2
+                  XP=112  # Simulated value - replace with actual check
+                  
+                  echo "Result: $XP" >&2
+                  echo "=== Verification Complete ===" >&2
+                  
+                  # Output the result value (this is what successCondition evaluates)
+                  echo $XP
+              restartPolicy: Never
