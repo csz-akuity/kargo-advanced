@@ -21,6 +21,7 @@ spec:
             spec:
               containers:
               - name: verification-container
+                image: busybox:latest
                 command:
                 - sh
                 - -c
@@ -28,14 +29,18 @@ spec:
                   # All echo statements output to stdout/stderr for log collection
                   echo "=== Verification Starting ===" >&2
                   echo "Checking Pokemon: {{args.pokemon}}" >&2
-                  
-                  # Simulate a check (in real usage, this would be your actual verification)
                   echo "Fetching data..." >&2
-                  XP=112  # Simulated value - replace with actual check
                   
+                  # Simulate a check - set the result value
+                  # In real usage, this would be your actual verification logic
+                  XP=112
+                  
+                  # Log the result to stderr (for viewing in Kargo UI/CLI)
                   echo "Result: $XP" >&2
                   echo "=== Verification Complete ===" >&2
                   
-                  # Output the result value (this is what successCondition evaluates)
-                  echo $XP
+                  # CRITICAL: Output ONLY the numeric result to stdout (last line)
+                  # Argo Rollouts reads the last line of stdout as the result value
+                  # No text, no labels, just the number
+                  printf "%d\n" $XP
               restartPolicy: Never
