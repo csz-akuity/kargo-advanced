@@ -7,7 +7,8 @@ spec:
   freightCreationPolicy: Manual
   subscriptions:
   - chart:
-      repoURL: ghcr.io/csz-akuity/guestbook
+      # repoURL: ghcr.io/csz-akuity/guestbook
+      repoURL: https://charts.akuity.io
       imageSelectionStrategy: SemVer
       constraint: ">=0.1.1762403815-0"
       # allowTags: ^v?[0-9]+\.[0-9]+\.[0-9]+([\+-].*)?$
